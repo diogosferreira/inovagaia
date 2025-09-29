@@ -4,7 +4,7 @@ export function swiperMentors() {
 
 
     var swiper_base = new Swiper(".swiper-mentors", {
-        slidesPerView: 4,
+        slidesPerView: 3,
         speed: 700,
         spaceBetween: 40,
         centeredSlides: false,
