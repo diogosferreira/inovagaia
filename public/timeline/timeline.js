@@ -21,9 +21,7 @@ export function timeline() {
             wrapper.querySelector(".timeline-points_wrapper");
         if (!list) return;
 
-        // Ensure clean start and clipping
-        gsap.set(list, { x: 0 });
-        viewport.style.overflow = "hidden";
+
 
         // How far left we must move so right edges align
         const targetX = () => {
