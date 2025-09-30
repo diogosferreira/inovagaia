@@ -34,8 +34,8 @@ export function timeline() {
             ease: "power1.inOut",
             scrollTrigger: {
                 trigger: ".timeline-sticky_wrapper",
-                start: "top+=15% top",
-                end: "bottom-=15% bottom",
+                start: "top+=10% top",
+                end: "bottom-=10% bottom",
                 scrub: true,
                 invalidateOnRefresh: true,
                 onRefresh: () => gsap.set(list, { x: 0 }) // reset before recalculating
