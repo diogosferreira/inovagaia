@@ -3,6 +3,10 @@ export function timeline() {
     if (!element) return;
 
 
+    $("[data-timeline-numbers='true']").each(function (i) {
+        $(this).text(i + 1);
+    });
+
 
     (function timelineSlideLeft() {
         const wrapper = document.querySelector(".timeline-sticky_wrapper");
@@ -43,6 +47,5 @@ export function timeline() {
             }
         });
     })();
-
 
 }
