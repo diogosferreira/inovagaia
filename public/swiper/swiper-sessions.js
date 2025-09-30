@@ -6,7 +6,7 @@ export function swiperSessions() {
     var swiper_base = new Swiper(".swiper-sessions", {
         slidesPerView: 3,
         speed: 700,
-        spaceBetween: 40,
+        spaceBetween: 24,
         centeredSlides: false,
         loop: false,
         //loopedSlides: 50,
@@ -32,11 +32,11 @@ export function swiperSessions() {
             },
             1024: {
                 //slidesPerView: 2.8,
-                spaceBetween: 40,
+                spaceBetween: 24,
             },
             1400: {
                 //slidesPerView: 3.5,
-                spaceBetween: 40,
+                spaceBetween: 24,
             },
         },
         on: {
