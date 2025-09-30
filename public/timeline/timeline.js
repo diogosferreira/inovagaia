@@ -8,44 +8,59 @@ export function timeline() {
     });
 
 
+
     (function timelineSlideLeft() {
         const wrapper = document.querySelector(".timeline-sticky_wrapper");
         if (!wrapper) return;
 
-        // The visible mask (the thing that clips overflow)
-        const viewport = wrapper.querySelector(".timeline-anim_wrapper") || wrapper;
+        const viewport =
+            wrapper.querySelector(".timeline-anim_wrapper") || wrapper;
 
-        // The long horizontal strip to move
         const list =
             wrapper.querySelector(".timeline-points_wrapper.w-dyn-items") ||
             wrapper.querySelector(".timeline-points_wrapper");
-
         if (!list) return;
 
+        // Ensure clean start and clipping
+        gsap.set(list, { x: 0 });
+        viewport.style.overflow = "hidden";
 
-        // Compute how far LEFT we must go so the right edges align
+        // How far left we must move so right edges align
         const targetX = () => {
-            const vw = viewport.getBoundingClientRect().width;
-            const lw = list.scrollWidth; // full content width
-            const overflow = lw - vw;
-            // Debug to see what we’re animating to:
-            // console.log({ vw, lw, overflow, x: -Math.max(0, overflow) });
-            return -Math.max(0, overflow); // NEGATIVE -> go left
+            const vw = viewport.clientWidth;
+            const lw = list.scrollWidth;           // full width of the horizontal content
+            const overflow = Math.max(0, lw - vw); // don't go positive if content is smaller
+            return -overflow;                      // negative => move left
         };
 
-        gsap.to(list, {
-            x: targetX,                 // move left by overflow
-            ease: "power1.inOut",
-            scrollTrigger: {
-                trigger: ".timeline-sticky_wrapper",
-                start: "top+=10% top",
-                end: "bottom-=10% bottom",
-                scrub: true,
-                invalidateOnRefresh: true,
-                onRefresh: () => gsap.set(list, { x: 0 }) // reset before recalculating
-                // markers: true
+        // Build the animation paused and let ScrollTrigger drive its progress
+        const anim = gsap.fromTo(
+            list,
+            { x: 0 },
+            {
+                x: targetX,               // function-based for responsive recalcs
+                ease: "power1.inOut",
+                immediateRender: false    // don't force-render on creation
             }
+        );
+
+        ScrollTrigger.create({
+            animation: anim,
+            trigger: ".timeline-sticky_wrapper",
+            start: "top+=10% top",
+            end: "bottom-=10% bottom",
+            scrub: true,
+            invalidateOnRefresh: true,
+            onRefresh: (self) => {
+                // Recompute the TO value and keep progress in sync
+                anim.vars.x = targetX;
+                anim.invalidate();        // re-measure & rebuild tween
+            }
+            // markers: true
         });
+
+        // If images/fonts affect width, refresh after they load
+        window.addEventListener("load", () => ScrollTrigger.refresh());
     })();
 
 }
