@@ -1,9 +1,9 @@
-export function swiperMentors() {
+export function swiperSessions() {
     const element = document.querySelector(".swiper-mentors");
     if (!element) return;
 
 
-    var swiper_base = new Swiper(".swiper-mentors", {
+    var swiper_base = new Swiper(".swiper-sessions", {
         slidesPerView: 3,
         speed: 700,
         spaceBetween: 40,
@@ -11,7 +11,7 @@ export function swiperMentors() {
         loop: false,
         //loopedSlides: 50,
         pagination: {
-            el: ".swiper-pagination.is-mentors",
+            el: ".swiper-pagination.is-sessions",
             clickable: true,
             renderBullet: function (index, className) {
                 return (
@@ -19,10 +19,7 @@ export function swiperMentors() {
                 );
             },
         },
-        navigation: {
-            nextEl: ".base-next-arrow",
-            prevEl: ".base-prev-arrow",
-        },
+
         keyboard: {
             enabled: true,
             onlyInViewport: false,
