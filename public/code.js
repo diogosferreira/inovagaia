@@ -7,11 +7,13 @@ import { swiperTestimonials } from './swiper/swiper-testimonials.js';
 import { timeline } from './timeline/timeline.js';
 import { numbersCount } from './numbers/number-count.js';
 import { backgroundGradient } from './gradient/background-gradient.js';
+import { horizontalLinesAnimation } from './gsap-animations/horizontal-line.js';
 
 
 
 
 function initAll() {
+    horizontalLinesAnimation();
     backgroundGradient();
     numbersCount();
     swiperMentors();
