@@ -6,11 +6,13 @@ import { swiperSessions } from './swiper/swiper-sessions.js';
 import { swiperTestimonials } from './swiper/swiper-testimonials.js';
 import { timeline } from './timeline/timeline.js';
 import { numbersCount } from './numbers/number-count.js';
+import { backgroundGradient } from './gradient/background-gradient.js';
 
 
 
 
 function initAll() {
+    backgroundGradient();
     numbersCount();
     swiperMentors();
     marqueeSpeed();
