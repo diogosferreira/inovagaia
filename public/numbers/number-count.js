@@ -1,5 +1,5 @@
 export function numbersCount() {
-    const element = document.querySelector("");
+    const element = document.querySelector("[data-numbers-count-wrapper='true']");
     if (!element) return;
 
     $("[data-numbers-count-wrapper='true']").each(function () {
