@@ -177,8 +177,8 @@ export function gsapTitles() {
                 yPercent: 0,
                 opacity: 1,
                 ease: "power2.out",
-                //stagger: 0.1,
-                stagger: { amount: 0.7 }, // total stagger time
+                stagger: 0.1,
+                //stagger: { amount: 0.7 }, // total stagger time
                 scrollTrigger: {
                     trigger: element,
                     start: "top 85%",
@@ -200,6 +200,7 @@ export function gsapTitles() {
                 scrollTrigger: {
                     trigger: element,
                     start: "top 80%",
+                    end: "bottom 80%",
                     scrub: true
                 }
             }
