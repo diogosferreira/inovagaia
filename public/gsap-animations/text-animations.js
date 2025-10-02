@@ -1,4 +1,4 @@
-export function gsapTitles() {
+/*export function gsapTitles() {
     const element = document.querySelector("[data-text-split='true']");
     if (!element) return;
 
@@ -72,3 +72,72 @@ export function gsapTitles() {
 }
 
 
+*/
+
+
+export function gsapTitles() {
+    const targets = document.querySelectorAll("[data-text-split='true']");
+    if (!targets.length) return;
+
+    document.fonts.ready.then(() => {
+        targets.forEach((el) => {
+            if (el.__splitDone) return;
+            el.__splitDone = true;
+
+            const wantsLineReveal = el.matches("[data-text-line='true']");
+            const wantsLetterAnim = el.matches("[data-text-letter='true']");
+
+            SplitText.create(el, {
+                type: "lines,words,chars",
+                autoSplit: true,
+                mask: "lines",
+                linesClass: "lines",
+                wordsClass: "word",
+                charsClass: "char",
+                onSplit(self) {
+                    if (wantsLineReveal) {
+                        return gsap.timeline({
+                            scrollTrigger: {
+                                trigger: el,
+                                start: "top bottom",
+                                end: "top 80%",
+                                toggleActions: "none play none reset",
+                            },
+                        })
+                            .from(self.lines, {
+                                yPercent: 110,
+                                duration: 0.8,
+                                delay: 0.2,
+                                stagger: { amount: 0.5 },
+                                ease: "power1.out",
+                            });
+                    }
+                },
+            });
+
+            if (wantsLetterAnim) {
+                const chars = el.querySelectorAll(".char");
+                if (chars.length) {
+                    gsap.fromTo(
+                        chars,
+                        { opacity: 0.35 },
+                        {
+                            opacity: 1,
+                            ease: "power1.inOut",
+                            stagger: 0.03,
+                            scrollTrigger: {
+                                trigger: el,
+                                start: "top 80%",
+                                end: "top 40%",
+                                scrub: true,
+                            },
+                        }
+                    );
+                }
+            }
+        });
+
+        // reveal after setup to avoid flicker
+        gsap.set(targets, { visibility: "visible" });
+    });
+}
