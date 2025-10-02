@@ -8,11 +8,13 @@ import { timeline } from './timeline/timeline.js';
 import { numbersCount } from './numbers/number-count.js';
 import { backgroundGradient } from './gradient/background-gradient.js';
 import { horizontalLinesAnimation } from './gsap-animations/horizontal-line.js';
+import { menu } from './menu/menu.js';
 
 
 
 
 function initAll() {
+    menu();
     horizontalLinesAnimation();
     backgroundGradient();
     numbersCount();
