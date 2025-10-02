@@ -10,11 +10,13 @@ import { backgroundGradient } from './gradient/background-gradient.js';
 import { horizontalLinesAnimation } from './gsap-animations/horizontal-line.js';
 import { menu } from './menu/menu.js';
 import { loader } from './loader/loader.js';
+import { gsapTitles } from './gsap-animations/text-animations.js';
 
 
 
 
 function initAll() {
+    gsapTitles();
     loader();
     menu();
     horizontalLinesAnimation();
