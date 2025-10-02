@@ -71,9 +71,7 @@ export function gsapTitles() {
                     invalidateOnRefresh: true,
                     // markers: true,
                 },
-                onComplete() {
-                    lines.forEach((ln) => (ln.style.willChange = ""));
-                },
+
             }
         );
     });
