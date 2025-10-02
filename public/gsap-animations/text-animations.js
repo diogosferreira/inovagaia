@@ -13,7 +13,7 @@ export function gsapTitles() {
             charsClass: "char",
         });
         //
-        gsap.set(text, { visibility: "visible" });
+
     });
 
 
@@ -77,6 +77,10 @@ export function gsapTitles() {
 
 
 
+
+
+
+    gsap.set(text, { visibility: "visible" });
 
 
 
