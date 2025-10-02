@@ -2,9 +2,6 @@ export function menu() {
 
 
     document.addEventListener("DOMContentLoaded", function () {
-
-
-
         (function navHoverClip() {
             const wrapper = document.querySelector(".nav-button-menu_wrapper");
             const trigger = document.querySelector(".nav-hamburger");
