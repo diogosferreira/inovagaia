@@ -177,7 +177,7 @@ export function gsapTitles() {
                 yPercent: 0,
                 opacity: 1,
                 ease: "power2.out",
-                stagger: 0.1,
+                //stagger: 0.1,
                 stagger: { amount: 0.7 }, // total stagger time
                 scrollTrigger: {
                     trigger: element,
