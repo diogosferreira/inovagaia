@@ -42,29 +42,38 @@ export function gsapTitles() {
 
 
 
-    const textLineElements = document.querySelectorAll("[data-text-line='true']");
 
-    if (textLineElements.length) {
-        textLineElements.forEach(el => {
-            const lines = el.querySelectorAll(".lines");
+    const wrappers = document.querySelectorAll("[data-text-line='true']");
 
-            // Set initial opacity
-            gsap.set(lines, { opacity: 0.35 });
+    wrappers.forEach((el) => {
+        const lines = el.querySelectorAll(".lines");
+        if (!lines.length) return;
 
-            gsap.to(lines, {
-                opacity: 1,
+        // perf hint
+        lines.forEach(l => (l.style.willChange = "transform, opacity"));
+
+        gsap.fromTo(lines,
+            { yPercent: 100 },
+            {
+                yPercent: 0,
                 ease: "power1.inOut",
-                stagger: 0.03,
-                delay: 2,
+                stagger: 0.1,
+                delay: 0,                    // avoid fixed 2s delay unless you want it
+                duration: 0.65,
                 scrollTrigger: {
                     trigger: el,
                     start: "top 80%",
-                    end: "top 40%",
-                    scrub: true,
+                    once: true,                // play only once; remove if you want replay
+                    invalidateOnRefresh: true
+
+                },
+                onComplete() {
+                    // clean up perf hint
+                    lines.forEach(l => (l.style.willChange = ""));
                 }
-            });
-        });
-    }
+            }
+        );
+    });
 
 
 
