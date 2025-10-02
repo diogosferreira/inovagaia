@@ -3,30 +3,37 @@ export function gsapTitles() {
     if (!element) return;
 
 
-    document.querySelectorAll("[data-text-split='true']").forEach((text) => {
-        const split = new SplitText(text, {
-            type: "words, chars, lines",
-            //mask: "words",
-            mask: "lines",
-            wordsClass: "word",
-            linesClass: "lines",
-            charsClass: "char",
+    // 1) Split text into lines/words/chars for all targets
+    const splitTargets = document.querySelectorAll("[data-text-split='true']");
+    if (splitTargets.length) {
+        splitTargets.forEach((text) => {
+            // Avoid re-splitting if already processed
+            if (text.__splitDone) return;
+            if (typeof SplitText !== "function") return; // SplitText must be loaded
+
+            new SplitText(text, {
+                type: "words, chars, lines",
+                mask: "lines",
+                wordsClass: "word",
+                linesClass: "lines",
+                charsClass: "char",
+            });
+
+            gsap.set(text, { visibility: "visible" });
+            text.__splitDone = true;
         });
-        //
+    }
 
-    });
-
-
+    // 2) Per-letter opacity scrub
     const textLetterElements = document.querySelectorAll("[data-text-letter='true']");
+    textLetterElements.forEach((el) => {
+        const chars = el.querySelectorAll(".char");
+        if (!chars.length) return;
 
-    if (textLetterElements.length) {
-        textLetterElements.forEach(el => {
-            const chars = el.querySelectorAll(".char");
-
-            // Set initial opacity
-            gsap.set(chars, { opacity: 0.35 });
-
-            gsap.to(chars, {
+        gsap.fromTo(
+            chars,
+            { opacity: 0.35 },
+            {
                 opacity: 1,
                 ease: "power1.inOut",
                 stagger: 0.03,
@@ -35,54 +42,39 @@ export function gsapTitles() {
                     start: "top 80%",
                     end: "top 40%",
                     scrub: true,
-                }
-            });
-        });
-    }
+                    // markers: true,
+                },
+            }
+        );
+    });
 
-
-
-
-    const wrappers = document.querySelectorAll("[data-text-line='true']");
-
-    wrappers.forEach((el) => {
+    // 3) Per-line reveal (slide up)
+    const lineBlocks = document.querySelectorAll("[data-text-line='true']");
+    lineBlocks.forEach((el) => {
         const lines = el.querySelectorAll(".lines");
         if (!lines.length) return;
 
-        // perf hint
-        lines.forEach(l => (l.style.willChange = "transform, opacity"));
 
-        gsap.fromTo(lines,
+
+        gsap.fromTo(
+            lines,
             { yPercent: 100 },
             {
                 yPercent: 0,
                 ease: "power1.inOut",
                 stagger: 0.1,
-                delay: 0,                    // avoid fixed 2s delay unless you want it
                 duration: 0.65,
                 scrollTrigger: {
                     trigger: el,
                     start: "top 80%",
-                    once: true,                // play only once; remove if you want replay
-                    invalidateOnRefresh: true
-
+                    once: true,
+                    invalidateOnRefresh: true,
+                    // markers: true,
                 },
                 onComplete() {
-                    // clean up perf hint
-                    lines.forEach(l => (l.style.willChange = ""));
-                }
+                    lines.forEach((ln) => (ln.style.willChange = ""));
+                },
             }
         );
     });
-
-
-
-
-
-
-    gsap.set(text, { visibility: "visible" });
-
-
-
-
 }
