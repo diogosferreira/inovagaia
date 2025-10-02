@@ -150,29 +150,28 @@ export function gsapTitles() {
     // -------------------------
     // 1) Shared split function
     // -------------------------
-    function splitText(el) {
-        // only split once
-        if (el.__split) return el.__split;
+    function createSplitText(element) {
+        if (element.__splitInstance) return element.__splitInstance;
 
-        el.__split = SplitText.create(el, {
+        element.__splitInstance = SplitText.create(element, {
             type: "lines,words,chars",
             autoSplit: true,
             mask: "lines",
-            linesClass: "lines",
+            linesClass: "line",
             wordsClass: "word",
             charsClass: "char",
         });
 
-        return el.__split;
+        return element.__splitInstance;
     }
 
     // -------------------------
     // 2) Animations
     // -------------------------
-    function animateLines(el) {
-        const split = splitText(el);
+    function animateByLines(element) {
+        const splitInstance = createSplitText(element);
 
-        gsap.fromTo(split.lines,
+        gsap.fromTo(splitInstance.lines,
             { yPercent: 100, opacity: 0 },
             {
                 yPercent: 0,
@@ -181,7 +180,7 @@ export function gsapTitles() {
                 stagger: 0.1,
                 duration: 0.8,
                 scrollTrigger: {
-                    trigger: el,
+                    trigger: element,
                     start: "top 85%",
                     toggleActions: "play none none reverse"
                 }
@@ -189,17 +188,17 @@ export function gsapTitles() {
         );
     }
 
-    function animateChars(el) {
-        const split = splitText(el);
+    function animateByChars(element) {
+        const splitInstance = createSplitText(element);
 
-        gsap.fromTo(split.chars,
+        gsap.fromTo(splitInstance.chars,
             { opacity: 0.2 },
             {
                 opacity: 1,
                 ease: "power1.inOut",
                 stagger: 0.02,
                 scrollTrigger: {
-                    trigger: el,
+                    trigger: element,
                     start: "top 80%",
                     scrub: true
                 }
@@ -210,6 +209,17 @@ export function gsapTitles() {
     // -------------------------
     // 3) Init
     // -------------------------
-    document.querySelectorAll("[data-text-line='true']").forEach(animateLines);
-    document.querySelectorAll("[data-text-letter='true']").forEach(animateChars);
+    const splitTextElements = document.querySelectorAll("[data-text-split='true']");
+
+    // prepare splits
+    splitTextElements.forEach((element) => createSplitText(element));
+
+    // reveal after setup to avoid flicker
+    gsap.set(splitTextElements, { visibility: "visible" });
+
+    // attach animations depending on attributes
+    splitTextElements.forEach((element) => {
+        if (element.hasAttribute("data-text-line")) animateByLines(element);
+        if (element.hasAttribute("data-text-letter")) animateByChars(element);
+    });
 }
