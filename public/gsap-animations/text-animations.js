@@ -53,7 +53,7 @@ export function gsapTitles() {
             {
                 yPercent: 0,
                 ease: "power1.inOut",
-                stagger: 0.1,
+                //stagger: 0.1,
                 duration: 0.65,
                 scrollTrigger: {
                     trigger: el,
