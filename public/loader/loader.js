@@ -46,4 +46,13 @@ export function loader() {
         //   lenis.scrollTo(0, { immediate: true, force: true });
     })();
 
+
+
+    gsap.to(".hero-image_wrapper", {
+        clipPath: "inset(0% round 10px)",   // fully revealed
+        ease: "power1.inOut",
+        duration: 1.5
+        // if putting inside a timeline, you can add a position param
+    });
+
 }
