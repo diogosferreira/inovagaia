@@ -47,15 +47,13 @@ export function gsapTitles() {
         const lines = el.querySelectorAll(".lines");
         if (!lines.length) return;
 
-
-
         gsap.fromTo(
             lines,
             { yPercent: 100 },
             {
                 yPercent: 0,
                 ease: "power1.inOut",
-                stagger: 0.1,
+                //stagger: 0.1,
                 duration: 0.65,
                 scrollTrigger: {
                     trigger: el,
