@@ -49,7 +49,7 @@ export function loader() {
 
 
     gsap.to(".hero-image_wrapper", {
-        clipPath: "inset(0% round 10px)",   // fully revealed
+        clipPath: "inset(0rem round 10px)",   // fully revealed
         ease: "power2.inOut",
         duration: 1
 
