@@ -51,8 +51,8 @@ export function loader() {
     gsap.to(".hero-image_wrapper", {
         clipPath: "inset(0% round 10px)",   // fully revealed
         ease: "power1.inOut",
-        duration: 1.5
-        // if putting inside a timeline, you can add a position param
+        duration: 1
+
     });
 
 }
