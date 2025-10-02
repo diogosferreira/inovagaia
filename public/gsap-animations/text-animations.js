@@ -2,27 +2,20 @@ export function gsapTitles() {
     const element = document.querySelector("[data-text-split='true']");
     if (!element) return;
 
+    const texts = document.querySelectorAll("[data-text-split='true']");
 
-    // 1) Split text into lines/words/chars for all targets
-    const splitTargets = document.querySelectorAll("[data-text-split='true']");
-    if (splitTargets.length) {
-        splitTargets.forEach((text) => {
-            // Avoid re-splitting if already processed
-            if (text.__splitDone) return;
-            if (typeof SplitText !== "function") return; // SplitText must be loaded
-
-            new SplitText(text, {
-                type: "words, chars, lines",
-                mask: "lines",
-                wordsClass: "word",
-                linesClass: "lines",
-                charsClass: "char",
-            });
-
-            gsap.set(text, { visibility: "visible" });
-            text.__splitDone = true;
+    document.querySelectorAll("[data-text-split='true']").forEach((text) => {
+        const split = new SplitText(text, {
+            type: "words, chars, lines",
+            //mask: "words",
+            mask: "lines",
+            wordsClass: "word",
+            linesClass: "lines",
+            charsClass: "char",
         });
-    }
+        //
+
+    });
 
     // 2) Per-letter opacity scrub
     const textLetterElements = document.querySelectorAll("[data-text-letter='true']");
@@ -75,4 +68,7 @@ export function gsapTitles() {
             }
         );
     });
+
+
+    gsap.set(texts, { visibility: "visible" });
 }
