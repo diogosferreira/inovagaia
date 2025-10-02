@@ -7,7 +7,7 @@ import { swiperTestimonials } from './swiper/swiper-testimonials.js';
 import { timeline } from './timeline/timeline.js';
 import { numbersCount } from './numbers/number-count.js';
 import { backgroundGradient } from './gradient/background-gradient.js';
-import { horizontalLinesAnimation } from './gsap-animations/horizontal-line.js';
+import { linesAnimation } from './gsap-animations/horizontal-line.js';
 import { menu } from './menu/menu.js';
 import { loader } from './loader/loader.js';
 import { gsapTitles } from './gsap-animations/text-animations.js';
@@ -19,7 +19,7 @@ function initAll() {
     gsapTitles();
     loader();
     menu();
-    horizontalLinesAnimation();
+    linesAnimation();
     backgroundGradient();
     numbersCount();
     swiperMentors();
