@@ -41,32 +41,30 @@ export function gsapTitles() {
         );
     });
 
-
-    // 3) Per-line reveal with stagger (no flash)
-    document.querySelectorAll("[data-text-line='true']").forEach((el) => {
+    // 3) Per-line reveal (slide up)
+    const lineBlocks = document.querySelectorAll("[data-text-line='true']");
+    lineBlocks.forEach((el) => {
         const lines = el.querySelectorAll(".lines");
         if (!lines.length) return;
 
-        gsap.to(lines, {
-            yPercent: 0,
-            opacity: 1,
-            ease: "power1.inOut",
-            stagger: 0.1,
-            duration: 0.65,
-            overwrite: true,
-            // prevent any eager painting
-            immediateRender: false,
-            scrollTrigger: {
-                trigger: el,
-                start: "top 80%",
-                once: true,
-                invalidateOnRefresh: true,
-            },
-            // cleanup (optional)
-            onComplete() {
-                gsap.set(lines, { clearProps: "transform,opacity" });
-            },
-        });
+        gsap.fromTo(
+            lines,
+            { yPercent: 100 },
+            {
+                yPercent: 0,
+                ease: "power1.inOut",
+                stagger: 0.1,
+                duration: 0.65,
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 80%",
+                    once: true,
+                    invalidateOnRefresh: true,
+                    // markers: true,
+                },
+
+            }
+        );
     });
 
 
