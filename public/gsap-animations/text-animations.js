@@ -172,7 +172,7 @@ export function gsapTitles() {
         const splitInstance = createSplitText(element);
 
         gsap.fromTo(splitInstance.lines,
-            { yPercent: 100, opacity: 0 },
+            { yPercent: 100, opacity: 0.5 },
             {
                 yPercent: 0,
                 opacity: 1,
@@ -200,7 +200,7 @@ export function gsapTitles() {
                 scrollTrigger: {
                     trigger: element,
                     start: "top 80%",
-                    end: "bottom 80%",
+                    end: "top 20%",
                     scrub: true
                 }
             }
