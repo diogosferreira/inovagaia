@@ -79,6 +79,8 @@ export function gsapTitles() {
     const targets = document.querySelectorAll("[data-text-split='true']");
     if (!targets.length) return;
 
+    /*
+
     document.fonts.ready.then(() => {
         targets.forEach((el) => {
             if (el.__splitDone) return;
@@ -140,4 +142,74 @@ export function gsapTitles() {
         // reveal after setup to avoid flicker
         gsap.set(targets, { visibility: "visible" });
     });
+
+
+    */
+
+
+    // -------------------------
+    // 1) Shared split function
+    // -------------------------
+    function splitText(el) {
+        // only split once
+        if (el.__split) return el.__split;
+
+        el.__split = SplitText.create(el, {
+            type: "lines,words,chars",
+            autoSplit: true,
+            mask: "lines",
+            linesClass: "lines",
+            wordsClass: "word",
+            charsClass: "char",
+        });
+
+        return el.__split;
+    }
+
+    // -------------------------
+    // 2) Animations
+    // -------------------------
+    function animateLines(el) {
+        const split = splitText(el);
+
+        gsap.fromTo(split.lines,
+            { yPercent: 100, opacity: 0 },
+            {
+                yPercent: 0,
+                opacity: 1,
+                ease: "power2.out",
+                stagger: 0.1,
+                duration: 0.8,
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                }
+            }
+        );
+    }
+
+    function animateChars(el) {
+        const split = splitText(el);
+
+        gsap.fromTo(split.chars,
+            { opacity: 0.2 },
+            {
+                opacity: 1,
+                ease: "power1.inOut",
+                stagger: 0.02,
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 80%",
+                    scrub: true
+                }
+            }
+        );
+    }
+
+    // -------------------------
+    // 3) Init
+    // -------------------------
+    document.querySelectorAll("[data-text-line='true']").forEach(animateLines);
+    document.querySelectorAll("[data-text-letter='true']").forEach(animateChars);
 }
