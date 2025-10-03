@@ -33,7 +33,7 @@ export function swiperMentors() {
                 spaceBetween: 16,
                 slidesPerView: 1,
             },
-            1024: {
+            767: {
                 //slidesPerView: 2.8,
                 spaceBetween: 24,
             },

@@ -1,67 +1,70 @@
 export function menu() {
 
 
+    if ($(window).width() >= 991) {
 
-    document.addEventListener("DOMContentLoaded", function () {
-        (function navHoverClip() {
-            const wrapper = document.querySelector(".nav-button-menu_wrapper");
-            const trigger = document.querySelector(".nav-hamburger");
-            const menu = document.querySelector(".nav_menu");
-            const closeBtn = document.querySelector(".nav-close-button"); // NEW
+        document.addEventListener("DOMContentLoaded", function () {
+            (function navHoverClip() {
+                const wrapper = document.querySelector(".nav-button-menu_wrapper");
+                const trigger = document.querySelector(".nav-hamburger");
+                const menu = document.querySelector(".nav_menu");
+                const closeBtn = document.querySelector(".nav-close-button"); // NEW
 
-            if (!wrapper || !trigger || !menu) return;
+                if (!wrapper || !trigger || !menu) return;
 
-            // Hidden state: menu clipped from the LEFT; close button hidden
-            gsap.set(menu, { clipPath: "inset(0% 0% 0% 100% round 40px)", autoAlpha: 1 });
-            if (closeBtn) gsap.set(closeBtn, { autoAlpha: 0, pointerEvents: "none" });
+                // Hidden state: menu clipped from the LEFT; close button hidden
+                gsap.set(menu, { clipPath: "inset(0% 0% 0% 100% round 40px)", autoAlpha: 1 });
+                if (closeBtn) gsap.set(closeBtn, { autoAlpha: 0, pointerEvents: "none" });
 
-            const tl = gsap.timeline({
-                paused: true,
-                defaults: { ease: "power3.inOut", duration: 0.8 }
-            })
-                .to(menu, {
-                    autoAlpha: 1,
-                    clipPath: "inset(0% 0% 0% 0% round 40px)" // reveal full width (left→right)
+                const tl = gsap.timeline({
+                    paused: true,
+                    defaults: { ease: "power3.inOut", duration: 0.8 }
                 })
-                // fade in close button while menu opens
-                .to(closeBtn, { autoAlpha: 1, pointerEvents: "auto" }, 0); // sync at start
+                    .to(menu, {
+                        autoAlpha: 1,
+                        clipPath: "inset(0% 0% 0% 0% round 40px)" // reveal full width (left→right)
+                    })
+                    // fade in close button while menu opens
+                    .to(closeBtn, { autoAlpha: 1, pointerEvents: "auto" }, 0); // sync at start
 
-            const openMenu = () => {
-                tl.play();
-                trigger.setAttribute("aria-expanded", "true");
-            };
+                const openMenu = () => {
+                    tl.play();
+                    trigger.setAttribute("aria-expanded", "true");
+                };
 
-            const closeMenu = () => {
-                tl.reverse();
-                trigger.setAttribute("aria-expanded", "false");
-            };
+                const closeMenu = () => {
+                    tl.reverse();
+                    trigger.setAttribute("aria-expanded", "false");
+                };
 
-            trigger.addEventListener("mouseenter", openMenu);
-            wrapper.addEventListener("mouseleave", closeMenu);
+                trigger.addEventListener("mouseenter", openMenu);
+                wrapper.addEventListener("mouseleave", closeMenu);
 
-            // Click toggles for touch/keyboard users
-            let open = false;
-            trigger.addEventListener("click", (e) => {
-                e.preventDefault();
-                open = !open;
-                open ? openMenu() : closeMenu();
-            });
-
-            // Optional: clicking the close button closes the menu
-            if (closeBtn) {
-                closeBtn.addEventListener("click", (e) => {
+                // Click toggles for touch/keyboard users
+                let open = false;
+                trigger.addEventListener("click", (e) => {
                     e.preventDefault();
-                    open = false;
-                    closeMenu();
+                    open = !open;
+                    open ? openMenu() : closeMenu();
                 });
-            }
 
-            // Optional: if focus leaves wrapper (keyboard), close it
-            wrapper.addEventListener("focusout", (e) => {
-                if (!wrapper.contains(e.relatedTarget)) closeMenu();
-            });
-        })();
-    });
+                // Optional: clicking the close button closes the menu
+                if (closeBtn) {
+                    closeBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        open = false;
+                        closeMenu();
+                    });
+                }
+
+                // Optional: if focus leaves wrapper (keyboard), close it
+                wrapper.addEventListener("focusout", (e) => {
+                    if (!wrapper.contains(e.relatedTarget)) closeMenu();
+                });
+            })();
+        });
+
+    }
 
 
     /*
