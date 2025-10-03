@@ -44,7 +44,7 @@ export function numbersCount() {
                 snap: { innerText: 1 }, // round to integers
                 scrollTrigger: {
                     trigger: triggerEl,
-                    start: "top 60%",
+                    start: "top 80%",
                     // end: "bottom top", // not needed for one-shot
                 },
                 onUpdate: function () {
