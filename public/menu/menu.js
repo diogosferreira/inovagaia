@@ -1,8 +1,14 @@
 export function menu() {
 
+    //Close menu on mobile
+    if ($(window).width() < 991) {
+        $(document).on("click", ".nav-link_wrapper", function (e) {
+            e.preventDefault();
+            $(".nav_button").trigger("click");
+        });
+    }
 
     if ($(window).width() >= 991) {
-
         document.addEventListener("DOMContentLoaded", function () {
             (function navHoverClip() {
                 const wrapper = document.querySelector(".nav-button-menu_wrapper");
@@ -63,7 +69,6 @@ export function menu() {
                 });
             })();
         });
-
     }
 
 
