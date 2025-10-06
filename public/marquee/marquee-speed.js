@@ -4,8 +4,7 @@ export function marqueeSpeed() {
 
     const marquees = document.querySelectorAll(".marquee_track-speed");
 
-    marquees.forEach((track, index) => {
-        const speed = 100; // px per second
+    marquees.forEach((track) => {
         const list = track.querySelector(".marquee_list-speed");
         if (!list) return;
 
@@ -18,6 +17,20 @@ export function marqueeSpeed() {
                 const width = list.offsetWidth;
                 if (width === 0) return;
 
+                // Default speed
+                let speed = 100;
+
+                // ✅ Check wrapper attributes
+                const wrapper = track.closest(".marquee-speed");
+
+                // If under 991px and wrapper has data-mobile-speed → override
+                if (window.innerWidth < 991 && wrapper?.hasAttribute("data-mobile-speed")) {
+                    const mobileSpeed = parseFloat(wrapper.getAttribute("data-mobile-speed"));
+                    if (!isNaN(mobileSpeed) && mobileSpeed > 0) {
+                        speed = mobileSpeed;
+                    }
+                }
+
                 const duration = width / speed;
 
                 gsap.set(track, { x: 0 });
@@ -29,7 +42,6 @@ export function marqueeSpeed() {
                 });
 
                 // ✅ Stop on hover if data attribute is present
-                const wrapper = track.closest(".marquee-speed");
                 if (wrapper && wrapper.getAttribute("data-stop-on-hover") === "true") {
                     wrapper.addEventListener("mouseenter", () => tween.pause());
                     wrapper.addEventListener("mouseleave", () => tween.resume());
